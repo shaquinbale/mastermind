@@ -31,4 +31,11 @@ class Board
     guess = dirty_guess.chars.map(&:to_i)
     @guesses[@turn] = guess
   end
+
+  def game_won?
+    check = @hints[self.turn].uniq
+    return true if check.length == 1 && check == ["O"]
+    
+    false
+  end
 end

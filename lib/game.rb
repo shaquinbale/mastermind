@@ -23,22 +23,23 @@ class Game
 
     @board.update_guess(guess)
     @board.update_hint
-    @board.turn += 1
+
     if @board.turn > 12
       lose_game
-    elsif false
+    elsif @board.game_won?
       win_game
     else
+      @board.turn += 1
       play_round
     end
   end
 
   def lose_game
-    nil
+    puts 'you lose'
   end
 
   def win_game
-    nil
+    puts 'you win'
   end
 end
 
