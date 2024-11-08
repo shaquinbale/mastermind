@@ -2,28 +2,33 @@
 # logic associated with making modifications to the board
 
 class Board
-  attr_accessor :turn
+  attr_accessor :turn, :guesses, :code
 
   def initialize
     @guesses = Array.new(12) { Array.new(4, nil) }
-    @hints = Array.new(12) { Array.new(4, 0) }
+    @hints = Array.new(12) { Array.new(4, 'X') }
     @turn = 0
-    @code = nil
+    @code = Array.new(4) { rand(1..6) }
   end
 
-  def display_board
+  def display_guesses
     (0..self.turn).each do |turn|
-      puts "#{self.board[turn]} - #{}"
+      puts "#{@guesses[turn - 1]} - #{@hints[turn - 1]}"
     end
   end
 
   def update_hint
-    @guesses[turn].each_with_index do |guess, index|
+    @guesses[self.turn].each_with_index do |guess, index|
       if @code[index] == (guess)
-        @guesses[index] = 1
+        @hints[self.turn][index] = 'O'
       elsif @code.include?(guess)
-        @guesses[index] =  2
+        @hints[self.turn][index] =  '/'
       end
     end
+  end
+
+  def update_guess(dirty_guess)
+    guess = dirty_guess.chars.map(&:to_i)
+    @guesses[@turn] = guess
   end
 end
