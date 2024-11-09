@@ -7,11 +7,22 @@ class Game
 
   def get_guess
     loop do
-      puts 'What is your next guess'
+      puts 'Please input your guess'
       guess = gets.chomp
       return guess if guess.match?(/\A[1-6]{4}\z/) || guess == 'quit'
       puts "Invalid input. Please enter a 4-digit code using numbers 1 to 6."
     end
+  end
+
+  def start
+    guess = get_guess
+    return nil if guess == 'quit'
+
+    @board.update_guess(guess)
+    @board.update_hint
+    @board.turn += 1
+
+    play_round
   end
 
   def play_round
@@ -35,13 +46,13 @@ class Game
   end
 
   def lose_game
-    puts 'you lose'
+    puts 'You lose'
   end
 
   def win_game
-    puts 'you win'
+    puts 'You win!'
   end
 end
 
 game = Game.new
-game.play_round
+game.start
