@@ -12,8 +12,8 @@ class Board
   end
 
   def display_guesses
-    (0..self.turn).each do |turn|
-      puts "#{@guesses[turn - 1]} - #{@hints[turn - 1]}"
+    (1..self.turn).each do |turn|
+      puts "#{@guesses[turn - 1]} - #{@hints[turn - 1].shuffle}"
     end
   end
 

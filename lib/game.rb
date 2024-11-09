@@ -26,7 +26,10 @@ class Game
   end
 
   def play_round
-    puts "\n\n\n\n\n\nNEW ROUND. Code is: #{@board.code}\n"
+    return lose_game if @board.turn == 12
+    return win_game if @board.game_won?
+
+    puts "\n\n\n\n\n\nNEW ROUND. Code is: #{@board.code}. Turn is #{@board.turn}\n"
     @board.display_guesses
 
     guess = get_guess
@@ -34,15 +37,9 @@ class Game
 
     @board.update_guess(guess)
     @board.update_hint
-
-    if @board.turn > 12
-      lose_game
-    elsif @board.game_won?
-      win_game
-    else
-      @board.turn += 1
-      play_round
-    end
+      
+    @board.turn += 1
+    play_round
   end
 
   def lose_game
